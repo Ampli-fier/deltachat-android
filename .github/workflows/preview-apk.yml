@@ -59,4 +59,3 @@ jobs:
         with:
           name: ${{ inputs.apk_name }}.apk
           path: 'build/outputs/apk/debug/*.apk'
-          compression-level: 0
