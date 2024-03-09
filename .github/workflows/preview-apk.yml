@@ -1,4 +1,4 @@
-name: Upload Preview APK
+name: Upload APK
 
 on:
   workflow_dispatch:
@@ -6,11 +6,11 @@ on:
       apk_name:
         description: 'apk name'
         required: true
-        default: 'app-preview'
+        default: 'deltachat_own_'
 
 jobs:
   build:
-    name: Upload Preview APK
+    name: Upload APK
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
@@ -58,4 +58,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.apk_name }}.apk
-          path: 'build/outputs/apk/debug/*.apk'
+          path: 'build/outputs/apk/gplay/debug/*.apk'
