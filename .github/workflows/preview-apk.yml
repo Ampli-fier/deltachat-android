@@ -2,7 +2,7 @@ name: Upload Preview APK
 
 on: workflow_dispatch
   inputs:
-    apk_name:
+    apkName:
       description: 'apk name'
       required: true
       default: 'app-preview'
