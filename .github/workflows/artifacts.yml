@@ -1,7 +1,7 @@
 name: add artifact links to pull request
 on:
   workflow_run:
-    workflows: ["Upload Preview APK"]
+    workflows: ["Upload APK"]
     types: [completed]
 
 jobs:

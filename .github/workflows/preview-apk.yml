@@ -58,4 +58,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.apk_name }}.apk
-          path: 'build/outputs/apk/gplay/debug/*.apk'
+          path: 'build/outputs/apk/fat/debug/*.apk'
