@@ -56,5 +56,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: name: ${{ inputs.apk_name }}.apk
+          name: ${{ inputs.apk_name }}.apk
           path: 'build/outputs/apk/fat/debug/*.apk'
