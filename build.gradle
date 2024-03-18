@@ -144,9 +144,9 @@ android {
 
     signingConfigs {
         debug {
-            // add `DC_DEBUG_STORE_FILE=/path/to/debug.keystore` to `~/.gradle/gradle.properties`
-            if(project.hasProperty("DC_DEBUG_STORE_FILE" )) {
-                storeFile file(DC_DEBUG_STORE_FILE )
+                storeFile file("../keystore.jks")
+                storePassword System.getenv("KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KEYSTORE_ALIAS")
             }
         }
         release {
