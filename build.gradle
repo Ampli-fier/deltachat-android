@@ -147,6 +147,7 @@ android {
                 storeFile file("keystore.jks")
                 storePassword System.getenv("KEYSTORE_PASSWORD")
                 keyAlias System.getenv("KEYSTORE_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
             }
         release {
             // can be defined at `~/.gradle/gradle.properties` or at "Build/Generate signed APK"
