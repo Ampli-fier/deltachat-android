@@ -1,10 +1,16 @@
 name: Upload Preview APK
 
-on: pull_request
+on:
+  workflow_dispatch:
+    inputs:
+      apk_name:
+        description: 'apk name'
+        required: true
+        default: 'deltachat_own_'
 
 jobs:
   build:
-    name: Upload Preview APK
+    name: Upload APK
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
@@ -40,16 +46,27 @@ jobs:
           ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         run: |
           export PATH="${PATH}:${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64/bin/"
-          scripts/install-toolchains.sh && scripts/ndk-make.sh
+          scripts/install-toolchains.sh && scripts/ndk-make.sh arm64-v8a
 
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
 
+      - name: Decode Keystore
+        env:
+          ENCODED_STRING: ${{ secrets.KEYSTORE_BASE_64 }}
+        run: |
+          echo "$ENCODED_STRING" > keystore-b64.txt
+          base64 -d keystore-b64.txt > keystore.jks
+
       - name: Build APK
-        run: ./gradlew --no-daemon assembleGplayDebug
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew --no-daemon assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: app-preview.apk
-          path: 'build/outputs/apk/gplay/debug/*.apk'
+          name: ${{ inputs.apk_name }}.apk
+          path: 'build/outputs/apk/fat/debug/*.apk'
